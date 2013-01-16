@@ -2,8 +2,7 @@
 By Gautam Chaudhary
 
 Phonegap plugin for Android for copying files from app assets to device SD Card.
-Tested with Phonegap versions 1.3 and 1.4
-Needs changes to make it work with Phonegap version >= 2.0
+Tested with Phonegap versions 1.3 and 1.4 and will need changes to make it work with newer Phonegap versions
 
 ## Adding the Plugin to your project ##
 

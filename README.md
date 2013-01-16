@@ -1,15 +1,14 @@
-Asset2SD
-========
-
-Phonegap plugin for Android for copying filies from app "assets" to device SD Card
-
 # Asset2SD plugin for Phonegap #
 By Gautam Chaudhary
+
+Phonegap plugin for Android for copying files from app assets to device SD Card.
+Tested with Phonegap versions 1.3 and 1.4
+Needs changes to make it work with Phonegap version >= 2.0
 
 ## Adding the Plugin to your project ##
 
 1. To install the plugin, move `asset2sd.js` to your project's www folder and include a reference to it in your html files. 
-2. Create a folder `gkcgautam` within your project's src/com/ folder and move the file `Asset2SD.java` into it.
+2. Create a folder `gkcgautam` within your project's `src/com/` folder and move the file `Asset2SD.java` into it.
 
 ## Using the plugin ##
 The plugin creates the object `window.plugins.Asset2SD` with method `startActivity`. 
@@ -17,7 +16,7 @@ The plugin creates the object `window.plugins.Asset2SD` with method `startActivi
 The full params are as follows:
 
 * asset_file - The file to be copied from app assets. For example, "www/images/photo.jpg"
-* destination_file_location - The folder in SD Card to which file should be copied. If the folder doesn't already exist, it gets created automatically.
+* destination_file_location - The folder in SD Card to which the file should be copied. If the folder doesn't already exist, it gets created automatically.
 * destination_file - The name with which the file has to saved. For example, "image.jpg"
 * callback Success callback.
 * fail Error callback
@@ -34,7 +33,7 @@ Example usage:
 
 	
 ## BUGS AND CONTRIBUTIONS ##
-If you have a patch, fork my repo baby and send me a pull request. Submit bug reports on GitHub, please.
+If you have a patch, fork my repo and send me a pull request. Submit bug reports on GitHub, please.
 	
 ## Licence ##
 

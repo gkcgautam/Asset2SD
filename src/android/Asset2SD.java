@@ -92,7 +92,7 @@ public class Asset2SD extends CordovaPlugin {
 			CheckDirectory.mkdir();		// Create destination directory if it doesn't already exist
 		}
 		
-	    InputStream in = this.ctx.getApplicationContext().getAssets().open(assetFile);
+	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
 	    OutputStream out = new FileOutputStream(destinationFileLocation+finalFileName);
 
 	    // Transfer bytes from in to out

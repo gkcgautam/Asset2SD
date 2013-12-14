@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,13 +37,18 @@ public class Asset2SD extends CordovaPlugin {
 	 * @param callbackId	The callback id used when calling back into JavaScript.
 	 * @return 				A PluginResult object with a status.
 	 */
-	 
-	public PluginResult execute(String action, JSONArray args, String callbackId) {
+	private CallbackContext callbackContext = null;
+
+	@Override
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		Log.d("Asset2SD", "Plugin Called");
+		this.callbackContext = callbackContext;
+
 		try {
 			if (action.equals("startActivity")) {
 				if(args.length() != 1) {
-					return new PluginResult(PluginResult.Status.INVALID_ACTION);
+					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+					return false;
 				}
 				
 				// Parse the arguments
@@ -55,24 +61,29 @@ public class Asset2SD extends CordovaPlugin {
 					try {
 						startActivity(assetFile,destinationFileLocation,destinationFile);
 						Log.d("Asset2SD", "File copied to -> "+destinationFileLocation);
-						return new PluginResult(PluginResult.Status.OK);
+						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+						return true;
 					}
 				    catch (IOException e) {
 				    	Log.d("Asset2SD", "Error occurred while reading and writing file");
 				    	e.printStackTrace();
-						return new PluginResult(PluginResult.Status.ERROR);
+						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+						return false;
 					}
 				}
 				else {
 					Log.d("Asset2SD", "Parameter(s) missing");
-					return new PluginResult(PluginResult.Status.ERROR);
+					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					return false;
 				}
 				
 			}
-			return new PluginResult(PluginResult.Status.INVALID_ACTION);
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+			return false;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
+			return false;
 		}
 	}
 	

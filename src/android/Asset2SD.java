@@ -20,13 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 
 import android.os.Environment;
 import android.util.Log;
 
-public class Asset2SD extends Plugin {
+public class Asset2SD extends CordovaPlugin {
 
 	/**
 	 * Executes the request and returns PluginResult.

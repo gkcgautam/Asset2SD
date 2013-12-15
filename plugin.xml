@@ -23,7 +23,7 @@
         </config-file>
         <source-file src="src/android/Asset2SD.java" target-dir="src/com/gkcgautam/asset2sd" />
     </platform>
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+    <config-file target="AndroidManifest.xml" parent="/manifest">
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     </config-file>
 </plugin>

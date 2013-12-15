@@ -110,7 +110,7 @@ public class Asset2SD extends CordovaPlugin {
 		}
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
-	    OutputStream out = new FileOutputStream(destinationFileLocation+finalFileName);
+	    OutputStream out = new FileOutputStream(destinationFileLocation+"/"+finalFileName);
 
 	    // Transfer bytes from in to out
 	    byte[] buf = new byte[1024];

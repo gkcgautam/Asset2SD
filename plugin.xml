@@ -2,7 +2,9 @@
 
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
            id="com.gkcgautam.asset2sd"
-      version="1.0.0">
+      version="1.0.0"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      >
     <name>Asset2SD</name>
     <description>Copy a file from Assets to the SD card</description>
     <license>MIT</license>
@@ -21,4 +23,7 @@
         </config-file>
         <source-file src="src/android/Asset2SD.java" target-dir="src/com/gkcgautam/asset2sd" />
     </platform>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </config-file>
 </plugin>

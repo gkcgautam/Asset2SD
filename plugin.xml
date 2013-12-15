@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+           id="com.gkcgautam.asset2sd"
+      version="1.0.0"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      >
+    <name>Asset2SD</name>
+    <description>Copy a file from Assets to the SD card</description>
+    <license>MIT</license>
+    <keywords>cordova,asset2sd</keywords>
+
+    <js-module src="www/asset2sd.js" name="Asset2SD">
+        <clobbers target="Asset2SD" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Asset2SD" >
+                <param name="android-package" value="com.gkcgautam.asset2sd.Asset2SD"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/Asset2SD.java" target-dir="src/com/gkcgautam/asset2sd" />
+    </platform>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </config-file>
+</plugin>

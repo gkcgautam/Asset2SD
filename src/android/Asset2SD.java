@@ -16,17 +16,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 
 import android.os.Environment;
 import android.util.Log;
 
-public class Asset2SD extends Plugin {
+public class Asset2SD extends CordovaPlugin {
+	private static final String TAG = Asset2SD.class.getSimpleName();
+
+	private CallbackContext callbackContext = null;
+
 
 	/**
 	 * Executes the request and returns PluginResult.
@@ -36,13 +41,16 @@ public class Asset2SD extends Plugin {
 	 * @param callbackId	The callback id used when calling back into JavaScript.
 	 * @return 				A PluginResult object with a status.
 	 */
-	 
-	public PluginResult execute(String action, JSONArray args, String callbackId) {
-		Log.d("Asset2SD", "Plugin Called");
+	@Override
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
+		Log.d(TAG, "Plugin Called");
+		this.callbackContext = callbackContext;
+
 		try {
 			if (action.equals("startActivity")) {
 				if(args.length() != 1) {
-					return new PluginResult(PluginResult.Status.INVALID_ACTION);
+					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+					return false;
 				}
 				
 				// Parse the arguments
@@ -54,30 +62,33 @@ public class Asset2SD extends Plugin {
 				if(assetFile != null && destinationFileLocation != null) {
 					try {
 						startActivity(assetFile,destinationFileLocation,destinationFile);
-						Log.d("Asset2SD", "File copied to -> "+destinationFileLocation);
-						return new PluginResult(PluginResult.Status.OK);
+						Log.d(TAG, "File copied to -> "+destinationFileLocation);
+						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+						return true;
 					}
 				    catch (IOException e) {
-				    	Log.d("Asset2SD", "Error occurred while reading and writing file");
+				    	Log.e(TAG, "Error occurred while reading and writing file");
 				    	e.printStackTrace();
-						return new PluginResult(PluginResult.Status.ERROR);
+						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+						return false;
 					}
 				}
 				else {
-					Log.d("Asset2SD", "Parameter(s) missing");
-					return new PluginResult(PluginResult.Status.ERROR);
+					Log.e(TAG, "Parameter(s) missing");
+					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					return false;
 				}
-				
 			}
-			return new PluginResult(PluginResult.Status.INVALID_ACTION);
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+			return false;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
+			return false;
 		}
 	}
 	
-	void startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException
-	{
+	void startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException {
 		File sd_path = Environment.getExternalStorageDirectory();	// Path to the SD Card in the device
 		destinationFileLocation = sd_path+"/"+destinationFileLocation;
 		
@@ -86,14 +97,20 @@ public class Asset2SD extends Plugin {
 			finalFileName = destinationFile;
 		}
 		
-		File CheckDirectory;
-		CheckDirectory = new File(destinationFileLocation);
-		if (!CheckDirectory.exists()) { 
-			CheckDirectory.mkdir();		// Create destination directory if it doesn't already exist
+		File destDirectory;
+		destDirectory = new File(destinationFileLocation);
+		if (destDirectory.exists() && !destDirectory.isDirectory())
+			throw new IOException("Can't create directory, a file is in the way");
+		if (!destDirectory.exists()) {
+			// Create destination directory if it doesn't already exist
+			destDirectory.mkdirs();
+			if (!destDirectory.isDirectory()) {
+				throw new IOException("Unable to create directory");
+			}
 		}
 		
-	    InputStream in = this.ctx.getApplicationContext().getAssets().open(assetFile);
-	    OutputStream out = new FileOutputStream(destinationFileLocation+finalFileName);
+	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
+	    OutputStream out = new FileOutputStream(destinationFileLocation+"/"+finalFileName);
 
 	    // Transfer bytes from in to out
 	    byte[] buf = new byte[1024];

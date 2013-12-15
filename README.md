@@ -6,7 +6,7 @@ Tested with Phonegap versions 3.0.9.
 
 ## Adding the Plugin to your project ##
 
-1. To install the plugin, 'cordova plugin add https://github.com/johnnylambada/Asset2SD.git'
+1. To install the plugin, 'cordova plugin add https://github.com/gkcgautam/Asset2SD.git'
 
 ## Using the plugin ##
 The plugin creates the object `window.plugins.asset2sd` with method `startActivity`. 

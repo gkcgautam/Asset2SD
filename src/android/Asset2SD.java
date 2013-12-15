@@ -28,6 +28,10 @@ import android.os.Environment;
 import android.util.Log;
 
 public class Asset2SD extends CordovaPlugin {
+	private static final String TAG = Asset2SD.class.getSimpleName();
+
+	private CallbackContext callbackContext = null;
+
 
 	/**
 	 * Executes the request and returns PluginResult.
@@ -37,11 +41,9 @@ public class Asset2SD extends CordovaPlugin {
 	 * @param callbackId	The callback id used when calling back into JavaScript.
 	 * @return 				A PluginResult object with a status.
 	 */
-	private CallbackContext callbackContext = null;
-
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-		Log.d("Asset2SD", "Plugin Called");
+		Log.d(TAG, "Plugin Called");
 		this.callbackContext = callbackContext;
 
 		try {
@@ -60,23 +62,22 @@ public class Asset2SD extends CordovaPlugin {
 				if(assetFile != null && destinationFileLocation != null) {
 					try {
 						startActivity(assetFile,destinationFileLocation,destinationFile);
-						Log.d("Asset2SD", "File copied to -> "+destinationFileLocation);
+						Log.d(TAG, "File copied to -> "+destinationFileLocation);
 						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
 						return true;
 					}
 				    catch (IOException e) {
-				    	Log.d("Asset2SD", "Error occurred while reading and writing file");
+				    	Log.e(TAG, "Error occurred while reading and writing file");
 				    	e.printStackTrace();
 						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
 						return false;
 					}
 				}
 				else {
-					Log.d("Asset2SD", "Parameter(s) missing");
+					Log.e(TAG, "Parameter(s) missing");
 					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
 					return false;
 				}
-				
 			}
 			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
 			return false;
@@ -87,8 +88,7 @@ public class Asset2SD extends CordovaPlugin {
 		}
 	}
 	
-	void startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException
-	{
+	void startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException {
 		File sd_path = Environment.getExternalStorageDirectory();	// Path to the SD Card in the device
 		destinationFileLocation = sd_path+"/"+destinationFileLocation;
 		
@@ -97,10 +97,16 @@ public class Asset2SD extends CordovaPlugin {
 			finalFileName = destinationFile;
 		}
 		
-		File CheckDirectory;
-		CheckDirectory = new File(destinationFileLocation);
-		if (!CheckDirectory.exists()) { 
-			CheckDirectory.mkdir();		// Create destination directory if it doesn't already exist
+		File destDirectory;
+		destDirectory = new File(destinationFileLocation);
+		if (destDirectory.exists() && !destDirectory.isDirectory())
+			throw new IOException("Can't create directory, a file is in the way");
+		if (!destDirectory.exists()) {
+			// Create destination directory if it doesn't already exist
+			destDirectory.mkdirs();
+			if (!destDirectory.isDirectory()) {
+				throw new IOException("Unable to create directory");
+			}
 		}
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);

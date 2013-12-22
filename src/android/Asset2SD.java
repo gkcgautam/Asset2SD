@@ -93,7 +93,7 @@ public class Asset2SD extends CordovaPlugin {
 
 		destinationDirLocation = sd_path+"/"+destinationDirLocation;
 		File destDirectory = new File(destinationDirLocation);
-		
+
 		if (destDirectory.exists() && !destDirectory.isDirectory())
 			throw new IOException("Can't create directory, a file is in the way");
 		if (!destDirectory.exists()) {
@@ -110,15 +110,15 @@ public class Asset2SD extends CordovaPlugin {
 		}
 
 		String fullPath = addTrailingSlash(destinationDirLocation)+finalFileName;
-		
-	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
-	    OutputStream out = new FileOutputStream(fullPath);
 
-	    // Transfer bytes from in to out
-	    byte[] buf = new byte[1024];
-	    int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
-	    in.close(); out.close();
-        return fullPath;
+		InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
+		OutputStream out = new FileOutputStream(fullPath);
+
+		// Transfer bytes from in to out
+		byte[] buf = new byte[1024];
+		int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
+		in.close(); out.close();
+		return fullPath;
 	}
 
 	// Adds a trailing slash to path if it doesn't exist

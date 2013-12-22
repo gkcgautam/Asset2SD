@@ -120,4 +120,12 @@ public class Asset2SD extends CordovaPlugin {
 	    in.close(); out.close();
         return fullPath;
 	}
+
+	// Adds a trailing slash to path if it doesn't exist
+	public String addTrailingSlash(String path){
+		if(path.charAt(path.length()-1)!='/'){
+		    path += "/";
+		}
+		return path;
+	}
 }

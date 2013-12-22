@@ -92,10 +92,6 @@ public class Asset2SD extends CordovaPlugin {
 		File sd_path = Environment.getExternalStorageDirectory();	// Path to the SD Card in the device
 		destinationFileLocation = sd_path+"/"+destinationFileLocation;
 		
-		String finalFileName = assetFile;
-		if(destinationFile != null) {
-			finalFileName = destinationFile;
-		}
 		
 		File destDirectory;
 		destDirectory = new File(destinationFileLocation);
@@ -110,6 +106,10 @@ public class Asset2SD extends CordovaPlugin {
 		}
 
         String fullPath = destinationFileLocation+"/"+finalFileName;
+		String finalFileName = assetFile;
+		if(destinationFile != null && destinationFile.length()>0) {
+			finalFileName = destinationFile;
+		}
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
 	    OutputStream out = new FileOutputStream(fullPath);

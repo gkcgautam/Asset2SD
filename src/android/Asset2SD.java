@@ -1,5 +1,5 @@
 /**
- * Asset2SD Phonegap ANdroid plugin
+ * Asset2SD Phonegap Android plugin
  * https://github.com/gkcgautam/Asset2SD
  *
  * Available under MIT License (2008).
@@ -87,14 +87,13 @@ public class Asset2SD extends CordovaPlugin {
 			return false;
 		}
 	}
-	
-	String startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException {
+
+	String startActivity(String assetFile, String destinationDirLocation, String destinationFile) throws IOException {
 		File sd_path = Environment.getExternalStorageDirectory();	// Path to the SD Card in the device
-		destinationFileLocation = sd_path+"/"+destinationFileLocation;
+
+		destinationDirLocation = sd_path+"/"+destinationDirLocation;
+		File destDirectory = new File(destinationDirLocation);
 		
-		
-		File destDirectory;
-		destDirectory = new File(destinationFileLocation);
 		if (destDirectory.exists() && !destDirectory.isDirectory())
 			throw new IOException("Can't create directory, a file is in the way");
 		if (!destDirectory.exists()) {
@@ -105,11 +104,12 @@ public class Asset2SD extends CordovaPlugin {
 			}
 		}
 
-        String fullPath = destinationFileLocation+"/"+finalFileName;
 		String finalFileName = assetFile;
 		if(destinationFile != null && destinationFile.length()>0) {
 			finalFileName = destinationFile;
 		}
+
+        String fullPath = addTrailingSlash(destinationDirLocation)+finalFileName;
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
 	    OutputStream out = new FileOutputStream(fullPath);

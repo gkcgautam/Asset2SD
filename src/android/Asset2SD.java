@@ -109,7 +109,7 @@ public class Asset2SD extends CordovaPlugin {
 			finalFileName = destinationFile;
 		}
 
-        String fullPath = addTrailingSlash(destinationDirLocation)+finalFileName;
+		String fullPath = addTrailingSlash(destinationDirLocation)+finalFileName;
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
 	    OutputStream out = new FileOutputStream(fullPath);

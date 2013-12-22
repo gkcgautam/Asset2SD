@@ -23,7 +23,7 @@ Example usage:
 
     window.plugins.asset2sd.startActivity({
 		asset_file: "www/images/photo.jpg",
-		destination_file_location: "Photos/fred",
+		destination_file_location: "Photos/fred/",
 		destination_file: "photo.jpg"},
 		function() { alert('success'); }, 
 		function() { alert('fail'); }

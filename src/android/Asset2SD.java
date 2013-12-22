@@ -61,9 +61,9 @@ public class Asset2SD extends CordovaPlugin {
 				
 				if(assetFile != null && destinationFileLocation != null) {
 					try {
-						startActivity(assetFile,destinationFileLocation,destinationFile);
-						Log.d(TAG, "File copied to -> "+destinationFileLocation);
-						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+						String path = startActivity(assetFile,destinationFileLocation,destinationFile);
+						callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,path));
+						Log.d(TAG, "File copied to -> "+path);
 						return true;
 					}
 				    catch (IOException e) {
@@ -88,7 +88,7 @@ public class Asset2SD extends CordovaPlugin {
 		}
 	}
 	
-	void startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException {
+	String startActivity(String assetFile, String destinationFileLocation, String destinationFile) throws IOException {
 		File sd_path = Environment.getExternalStorageDirectory();	// Path to the SD Card in the device
 		destinationFileLocation = sd_path+"/"+destinationFileLocation;
 		
@@ -108,13 +108,16 @@ public class Asset2SD extends CordovaPlugin {
 				throw new IOException("Unable to create directory");
 			}
 		}
+
+        String fullPath = destinationFileLocation+"/"+finalFileName;
 		
 	    InputStream in = this.cordova.getActivity().getApplicationContext().getAssets().open(assetFile);
-	    OutputStream out = new FileOutputStream(destinationFileLocation+"/"+finalFileName);
+	    OutputStream out = new FileOutputStream(fullPath);
 
 	    // Transfer bytes from in to out
 	    byte[] buf = new byte[1024];
 	    int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
 	    in.close(); out.close();
+        return fullPath;
 	}
 }

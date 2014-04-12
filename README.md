@@ -1,4 +1,4 @@
-# Asset2SD plugin for Phonegap #
+# Asset2SD plugin for Phonegap - v2.0 #
 By Gautam Chaudhary
 
 Phonegap plugin for Android for copying files from app assets to device SD Card.
@@ -9,26 +9,43 @@ Tested with Phonegap versions 3.0.9.
 1. To install the plugin, 'cordova plugin add https://github.com/gkcgautam/Asset2SD.git'
 
 ## Using the plugin ##
-The plugin creates the object `window.plugins.asset2sd` with method `startActivity`. 
 
-The full params are as follows:
+### Copy File ###
+Use the method `asset2sd.copyFile` with parameters: 
 
-* asset_file - The file to be copied from app assets. For example, "www/images/photo.jpg"
-* destination_file_location - The path in SD Card to which the file should be copied. If the path doesn't already exist, it gets created automatically.
-* destination_file - The name with which the file has to saved. For example, "image.jpg"
-* callback Success callback.
-* fail Error callback
+* `asset_file` - The file to be copied from app assets. For example, "www/images/photo.jpg"
+* `destination_file` - The destination file to which file has to be copied. If the path doesn't already exist, it gets created automatically. For example, "funnyPhotos/photo.jpg"
+* Success callback.
+* Error callback
 
 Example usage:
 
-    window.plugins.asset2sd.startActivity({
+    asset2sd.copyFile({
 		asset_file: "www/images/photo.jpg",
-		destination_file_location: "Photos/fred/",
-		destination_file: "photo.jpg"},
+		destination_file: "funnyPhotos/photo.jpg",
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
 	);       
 
+### Copy Directory ###
+Use the method `asset2sd.copyDir` with parameters: 
+
+* `asset_directory` - The directory to be copied from app assets. For example, "www/images"
+* `destination_directory` - The SD Card directory to which asset directory contents have to be copied. If the path doesn't already exist, it gets created automatically. For example, "funnyPhotos"
+* Success callback.
+* Error callback
+
+Note: This method will also copy the sub directories present in the asset directory.
+
+Example usage:
+
+    asset2sd.copyDir({
+		asset_directory: "www/images",
+		destination_directory: "funnyPhotos",
+		function() { alert('success'); }, 
+		function() { alert('fail'); }
+	);    
+	
 	
 ## BUGS AND CONTRIBUTIONS ##
 If you have a patch, fork my repo and send me a pull request. Submit bug reports on GitHub, please.
@@ -37,7 +54,7 @@ If you have a patch, fork my repo and send me a pull request. Submit bug reports
 
 The MIT License
 
-Copyright (c) 2013 Gautam Chaudhary
+Copyright (c) 2013-14 Gautam Chaudhary
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

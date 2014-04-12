@@ -2,13 +2,13 @@
 
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
            id="com.gkcgautam.asset2sd"
-      version="1.0.0"
+      version="2.0.0"
       xmlns:android="http://schemas.android.com/apk/res/android"
       >
     <name>Asset2SD</name>
-    <description>Copy a file from Assets to the SD card</description>
+    <description>Copy a file or directory from Assets to the SD card</description>
     <license>MIT</license>
-    <keywords>cordova,asset2sd</keywords>
+    <keywords>cordova,asset2sd,gkcgautam</keywords>
 
     <js-module src="www/asset2sd.js" name="Asset2SD">
         <clobbers target="Asset2SD" />

@@ -1,23 +1,24 @@
 /**
- * Asset2SD Phonegap ANdroid plugin
+ * Asset2SD Phonegap Android Plugin for copying files from Assets to SD Card
  * https://github.com/gkcgautam/Asset2SD
  *
  * Available under MIT License (2008).
  *
- * Copyright (c) Gautam Chaudhary 2013
+ * Copyright (c) Gautam Chaudhary 2014
  * http://www.gautamchaudhary.com
  */
 (function(cordova){
+
   var Asset2SD = function() {};
-  Asset2SD.prototype.startActivity = function(params, success, fail) {
-	return cordova.exec(function(args) {
-        success(args);
-    }, function(args) {
-        fail(args);
-    }, 'Asset2SD', 'startActivity', [params]);
+
+  Asset2SD.prototype.copyFile = function(params, successCallback, failCallback) {
+    return cordova.exec(successCallback, failCallback, 'Asset2SD', 'copyFile', [params]);
   };
+
+  Asset2SD.prototype.copyDir = function(params, successCallback, failCallback) {
+    return cordova.exec(successCallback, failCallback, 'Asset2SD', 'copyDir', [params]);
+  };
+
   window.asset2sd = new Asset2SD();
-  // backwards compatibility
-  window.plugins = window.plugins || {};
-  window.plugins.asset2sd = window.asset2sd;
+  
 })(window.PhoneGap || window.Cordova || window.cordova);

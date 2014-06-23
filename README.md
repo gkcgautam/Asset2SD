@@ -22,7 +22,7 @@ Example usage:
 
     asset2sd.copyFile({
 		asset_file: "www/images/photo.jpg",
-		destination_file: "funnyPhotos/photo.jpg",
+		destination_file: "funnyPhotos/photo.jpg"},
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
 	);       
@@ -41,7 +41,7 @@ Example usage:
 
     asset2sd.copyDir({
 		asset_directory: "www/images",
-		destination_directory: "funnyPhotos",
+		destination_directory: "funnyPhotos"},
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
 	);    

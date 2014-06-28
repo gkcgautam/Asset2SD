@@ -25,7 +25,7 @@ Example usage:
 		destination_file: "funnyPhotos/photo.jpg",
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
-	);       
+	});       
 
 ### Copy Directory ###
 Use the method `asset2sd.copyDir` with parameters: 
@@ -44,7 +44,7 @@ Example usage:
 		destination_directory: "funnyPhotos",
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
-	);    
+	});    
 	
 	
 ## BUGS AND CONTRIBUTIONS ##

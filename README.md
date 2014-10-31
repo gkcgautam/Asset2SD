@@ -21,11 +21,12 @@ Use the method `asset2sd.copyFile` with parameters:
 Example usage:
 
     asset2sd.copyFile({
-		asset_file: "www/images/photo.jpg",
-		destination_file: "funnyPhotos/photo.jpg"},
+			asset_file: "www/images/photo.jpg",
+			destination_file: "funnyPhotos/photo.jpg"
+		},
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
-	});       
+	);       
 
 ### Copy Directory ###
 Use the method `asset2sd.copyDir` with parameters: 
@@ -40,11 +41,12 @@ Note: This method will also copy the sub directories present in the asset direct
 Example usage:
 
     asset2sd.copyDir({
-		asset_directory: "www/images",
-		destination_directory: "funnyPhotos"},
+			asset_directory: "www/images",
+			destination_directory: "funnyPhotos"
+		},
 		function() { alert('success'); }, 
 		function() { alert('fail'); }
-	});    
+	);    
 	
 	
 ## BUGS AND CONTRIBUTIONS ##

@@ -165,8 +165,8 @@ public class Asset2SD extends CordovaPlugin {
 		
 		File destination_file = new File( sd_path + addLeadingSlash(arg_destinationFile) );
 		File destination_dir = destination_file.getParentFile();
-		String destination_file_path = destination_dir.getPath();
-		String destination_file_name = destination_dir.getName();
+		String destination_file_path = destination_file.getPath();
+		String destination_file_name = destination_file.getName();
 		
 		if(destination_file_name.length()<=0){
 			throw new IOException("Destination file name is missing");

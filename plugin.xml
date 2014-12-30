@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
            id="com.gkcgautam.asset2sd"
-      version="2.0.0"
+      version="2.0.1"
       xmlns:android="http://schemas.android.com/apk/res/android"
       >
     <name>Asset2SD</name>
